@@ -16,7 +16,7 @@ You can change these settings by editing the plugin file (before activating it).
 
 == Installation ==
 
-Just unzip the twitter_status.php in your plugins folder and activate in wp-admin (do not rename the plugin file).
+Just unzip the twitter_status.php in your plugins folder and activate in wp-admin (do not rename the plugin file and do not put it inside any folder other than the plugins folder).
 
 == Frequently Asked Questions ==
 
@@ -24,7 +24,7 @@ None..
 
 == Screenshots ==
 
-twitter_status_sc.png
+1. A sample Twitter status, received by the plugin
 
 == Usage ==
 
