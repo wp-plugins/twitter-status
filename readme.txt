@@ -5,6 +5,7 @@ Tags: Twitter, Status, Twitter Status
 Requires at least: 2.5
 Tested up to: 2.7
 Stable tag: 1.0.1
+Version: 1.0.1
 
 Twitter Status is a very simple no-fuzz plugin that gets the current Twitter message for your blog authors.
 
