@@ -158,7 +158,7 @@ function twitter_status_get($id) {
 
 function twitter_status_put_ajax() {
   
-	wp_print_scripts(array( 'sack' ));
+	wp_print_scripts(array( 'sack', 'jquery' ));
 	
 	?>
 		<script type="text/javascript">
