@@ -4,7 +4,7 @@
 Plugin Name: Twitter Status
 Plugin URI: http://naatan.com/category/wordpress/plugins/twitter-status/
 Description: Keeps track of your twitter status
-Version: 1.0
+Version: 1.0.1
 Author: Nathan Rijksen
 Author URI: http://naatan.com/
 */
@@ -25,6 +25,8 @@ $Twitter_Status = array(
 if (function_exists('add_action')) {
 	
 	add_action('wp_head', 'twitter_status_put_ajax' );
+	add_action('show_user_profile','twitter_status_add_profile_field');
+	add_action('edit_user_profile','twitter_status_add_profile_field');
 	add_action('personal_options','twitter_status_add_profile_field');
 	add_action('profile_update','twitter_status_update_profile_field');
 	register_activation_hook(__FILE__,'twitter_status_activate');
@@ -90,14 +92,14 @@ function twitter_status_add_profile_field() {
 	$twitter_id = $wpdb->get_var("SELECT twit_twitter_id FROM ".$wpdb->prefix."twitter_status WHERE twit_user_id='".$profileuser->id."'");
 	
 	?>
-	</table>
+	
 	<h3><?php _e('Twitter'); ?></h3>
 	<table class="form-table">
 		<tr>
 			<th scope="row"><?php _e('Twitter ID')?></th>
 			<td><label for="twitter_id"><input name="twitter_id" type="text" id="twitter_id" value="<?php echo $twitter_id ?>"></label></td>
 		</tr>
-	
+	</table>
 	<?php
 	
 }
@@ -141,11 +143,11 @@ function twitter_status_update() {
 
 function twitter_status_get($id) {
 	
-	if ($stream = fopen('http://twitter.com/statuses/user_timeline/'.$id.'.xml', 'r')) {
-		$str = stream_get_contents($stream);
+	if ($stream = @fopen('http://twitter.com/statuses/user_timeline/'.$id.'.xml', 'r')) {
+		$str = @stream_get_contents($stream);
 		preg_match('/\<text\>(.*?)\<\/text\>/',$str,$matches);
 	
-		fclose($stream);
+		@fclose($stream);
 	}
 	
 	
