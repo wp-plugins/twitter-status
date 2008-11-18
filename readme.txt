@@ -4,8 +4,8 @@ Donate link: http://www.naatan.com/
 Tags: Twitter, Status, Twitter Status
 Requires at least: 2.5
 Tested up to: 2.7
-Stable tag: 1.0.2
-Version: 1.0.2
+Stable tag: 1.0.3
+Version: 1.0.3
 
 Twitter Status is a very simple no-fuzz plugin that gets the current Twitter message for your blog authors.
 
@@ -17,7 +17,7 @@ You can change these settings by editing the plugin file (before activating it).
 
 == Installation ==
 
-Just unzip the twitter_status.php in your plugins folder and activate in wp-admin (do not rename the plugin file and do not put it inside any folder other than the plugins folder).
+Unzip the twitter-status folder into your plugins folder and activate the plugin in your admin cp.
 
 == Frequently Asked Questions ==
 

@@ -4,7 +4,7 @@
 Plugin Name: Twitter Status
 Plugin URI: http://naatan.com/category/wordpress/plugins/twitter-status/
 Description: Keeps track of your twitter status
-Version: 1.0.1
+Version: 1.0.3
 Author: Nathan Rijksen
 Author URI: http://naatan.com/
 */
@@ -164,7 +164,7 @@ function twitter_status_put_ajax() {
 		<script type="text/javascript">
 		//<![CDATA[
 		function update_twitter_status() {
-			var tweet = new sack("<?php bloginfo( 'wpurl' ); ?>/wp-content/plugins/twitter_status.php" );    
+			var tweet = new sack("<?php bloginfo( 'wpurl' ); ?>/wp-content/plugins/twitter-status/twitter_status.php" );    
 		 
 			tweet.execute = 1;
 			tweet.method = 'GET';
