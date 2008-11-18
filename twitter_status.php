@@ -2,18 +2,32 @@
 
 /*
 Plugin Name: Twitter Status
-Plugin URI: http://www.naatan.com/wordpress/plugins/
+Plugin URI: http://naatan.com/category/wordpress/plugins/twitter-status/
 Description: Keeps track of your twitter status
 Version: 1.0.1
 Author: Nathan Rijksen
 Author URI: http://naatan.com/
 */
 
+$Twitter_Status = array(
+	
+	// Only update twitter status for users where it has not been updated for xx seconds
+	'twitter_update_interval' 		=> '1800', 	// seconds
+	
+	// Users to process each time an ajax request is made (given that the option above matches)
+	'twitter_users_per_update' 		=> '5', 	// seconds
+	
+	// How often AJAX makes a GET request to update twitter statuses and retreive the latest changes
+	'twitter_ajax_refresh_interval' => '180', 	// seconds
+	
+);
+
 if (function_exists('add_action')) {
 	
 	add_action('wp_head', 'twitter_status_put_ajax' );
 	add_action('show_user_profile','twitter_status_add_profile_field');
 	add_action('edit_user_profile','twitter_status_add_profile_field');
+	add_action('personal_options','twitter_status_add_profile_field');
 	add_action('profile_update','twitter_status_update_profile_field');
 	register_activation_hook(__FILE__,'twitter_status_activate');
 	register_deactivation_hook(__FILE__,'twitter_status_deactivate');
@@ -73,7 +87,7 @@ function twitter_status_update_profile_field($id) {
 	
 function twitter_status_add_profile_field() {
 	
-	global $profileuser,$wpdb, $wp_version;
+	global $profileuser,$wpdb;
 	
 	$twitter_id = $wpdb->get_var("SELECT twit_twitter_id FROM ".$wpdb->prefix."twitter_status WHERE twit_user_id='".$profileuser->id."'");
 	
@@ -109,9 +123,18 @@ function twitter_status_update() {
 			$wpdb->query("UPDATE ".$wpdb->prefix."twitter_status
 						 SET twit_status='".$twitter_status."', twit_lastupdate=TIMESTAMP(NOW())
 						 WHERE twit_twitter_id=".$tweet->twit_twitter_id);
-			echo 'jQuery(".tweet_t'.$tweet->twit_twitter_id.'").html("'.$twitter_status.'");';
-			echo 'jQuery(".tweet_u'.$tweet->twit_user_id.'").html("'.$twitter_status.'");';
 		}
+		
+	}
+	
+	$tweets = $wpdb->get_results("SELECT *
+								 FROM ".$wpdb->prefix."twitter_status
+								 WHERE twit_lastupdate BETWEEN NOW() - INTERVAL 600 SECOND AND NOW()");
+
+	foreach ($tweets as $tweet) {
+		
+		echo 'jQuery(".tweet_t'.$tweet->twit_twitter_id.'").html("'.$tweet->twit_status.'");';
+		echo 'jQuery(".tweet_u'.$tweet->twit_user_id.'").html("'.$tweet->twit_status.'");';
 		
 	}
 
@@ -179,8 +202,11 @@ function twitter_status_activate() {
 		
 	}
 	
-	add_option('twitter_update_interval','1800');
-	add_option('twitter_users_per_update','5');
+	global $Twitter_Status;
+	
+	add_option('twitter_update_interval',		$Twitter_Status['twitter_update_interval']);
+	add_option('twitter_users_per_update',		$Twitter_Status['twitter_users_per_update']);
+	add_option('twitter_ajax_refresh_interval',	$Twitter_Status['twitter_ajax_refresh_interval']);
 	
 }
 
