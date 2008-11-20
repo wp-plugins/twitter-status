@@ -33,15 +33,15 @@ After installing, edit the author profiles in wp-admin that you would like to as
 
 You can use the following tags in your templates:
 
-   * <?php twitter('Username') ?>
-   * <?php twitter('twitter_id=xxxx') ?>
-   * <?php twitter('user_id=xxxx') ?>
+    <?php twitter('Username') ?>
+    <?php twitter('twitter_id=xxxx') ?>
+    <?php twitter('user_id=xxxx') ?>
 
 These functions will all echo the current status stored in the Database for the given user.
 
 You can use the following function to get the twitter status DIRECTLY from twitter, but keep in mind that using this will cause a delay in the loadtime of the page;
 
-   * <?php echo twitter_status_get('xxx') ?>
+    <?php echo twitter_status_get('xxx') ?>
 
 
 For “xxx” enter the twitter ID.
